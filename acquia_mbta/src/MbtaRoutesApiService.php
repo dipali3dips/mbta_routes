@@ -2,11 +2,13 @@
 
 namespace Drupal\acquia_mbta;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheFactoryInterface;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use GuzzleHttp\ClientInterface;
+use Drupal\Component\Datetime\Time;
 
 /**
  * Service for returing data from Mbta Routes API.
@@ -53,6 +55,13 @@ class MbtaRoutesApiService {
   protected $cacheBin;
 
   /**
+   * Time service.
+   *
+   * @var \Drupal\Component\Datetime\Time
+   */
+  protected $timeService;
+
+  /**
    * Constructs a new Mbta Routes object.
    *
    * @param \GuzzleHttp\ClientInterface $http_client
@@ -63,16 +72,20 @@ class MbtaRoutesApiService {
    *   LoggerChannelFactoryInterface definition.
    * @param \Drupal\Core\Config\ConfigFactory $configFactory
    *   ConfigFactory definition.
+   * @param \Drupal\Component\Datetime\Time $timeService
+   *   Time definition.
    */
   public function __construct(
     ClientInterface $http_client,
     CacheFactoryInterface $cache_factory,
     LoggerChannelFactoryInterface $logger_factory,
-    ConfigFactory $configFactory) {
+    ConfigFactory $configFactory,
+    Time $timeService) {
     $this->httpClient = $http_client;
     $this->cacheFactory = $cache_factory;
     $this->loggerFactory = $logger_factory;
     $this->configFactory = $configFactory;
+    $this->timeService = $timeService;
     $this->cacheBin = $this->cacheFactory->get('default');
   }
 
@@ -80,9 +93,14 @@ class MbtaRoutesApiService {
    * Returns the Json response for the given API path.
    */
   public function getMbtaRouteAPIResponse() {
+    $cached_response = $this->cacheBin->get('mbta_routes_data');
+    $response_data = NULL;
+    if ($cached_response) {
+      return $cached_response->data;
+    }
+    $expire_cache = Cache::PERMANENT;
     $api_url = $this->configFactory->get('acquia_mbta.settings')->get("mbta_api");
     $api_key = $this->configFactory->get('acquia_mbta.settings')->get("mbta_key");
-    $response_data = NULL;
     if (empty($api_url) || empty($api_key)) {
       $this->loggerFactory->get('acquia_mbta')->notice($this->t('Empty API Url or Empty Api Key'));
     }
@@ -98,10 +116,10 @@ class MbtaRoutesApiService {
         ]
         );
       }
-      return new JsonResponse([
-        'message' => $this->t("Download encountered an error"),
-      ], 400);
+      $expire_cache = $this->timeService->getRequestTime() + 60 * 1;
     }
+    $tags = ['config:acquia_mbta.settings'];
+    $this->cacheBin->set('mbta_routes_data', $response_data, $expire_cache, $tags);
     return $response_data;
   }
 

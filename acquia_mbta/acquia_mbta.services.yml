@@ -6,3 +6,4 @@ services:
       - '@cache_factory'
       - '@logger.factory'
       - '@config.factory'
+      - '@datetime.time'

@@ -86,8 +86,7 @@ class MbtaRoutesBlock extends BlockBase implements ContainerFactoryPluginInterfa
    */
   public function build() {
     $config = $this->configFactory->get('acquia_mbta.settings');
-    // print_r($this->mbtaRouteService->getMbtaRouteAPIResponse());
-    // die;
+    $table_data = $this->mbtaRouteService->getMbtaRouteAPIResponse();
     return [
       '#theme' => 'acquia_mbta_routes',
       '#context' => 'homepage',
