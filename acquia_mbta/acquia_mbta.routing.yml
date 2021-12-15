@@ -1,0 +1,14 @@
+acquia_mbta.settings:
+  path: '/admin/config/services/mbta-api'
+  defaults:
+    _form: 'Drupal\acquia_mbta\Form\MbtaApiConfigForm'
+    _title: 'Configuration for Acquia Mbta API'
+  requirements:
+    _permission: 'administer site configuration'
+acquia_mbta.mbta_routes:
+  path: '/mbta/routes'
+  defaults:
+    _controller: '\Drupal\acquia_mbta\Controller\MbtaRoutesController::getMbtaRoutes'
+    _title_callback: '\Drupal\acquia_mbta\Controller\MbtaRoutesController::getTitle'
+  requirements:
+    _permission: 'access content'    

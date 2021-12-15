@@ -1,0 +1,5 @@
+acquia_mbta.settings:
+  title: 'Configuration for Acquia Mbta'
+  route_name: acquia_mbta.settings
+  description: 'Configuration for Acquia Mbta'
+  parent: system.admin_config_services

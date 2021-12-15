@@ -1,0 +1,8 @@
+services:
+  acquia_mbta.mbta_routes:
+    class: Drupal\acquia_mbta\MbtaRoutesApiService
+    arguments:
+      - '@http_client'
+      - '@cache_factory'
+      - '@logger.factory'
+      - '@config.factory'

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Module functions.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function acquia_mbta_theme($existing, $type, $theme, $path) {
+  return [
+    'acquia_mbta_routes' => [
+      'variables' => [
+        'context' => NULL,
+      ],
+    ],
+  ];
+}
