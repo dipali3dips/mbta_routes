@@ -12,6 +12,7 @@ function acquia_mbta_theme($existing, $type, $theme, $path) {
   return [
     'acquia_mbta_routes' => [
       'variables' => [
+        'datatabledata' => NULL,
         'context' => NULL,
       ],
     ],

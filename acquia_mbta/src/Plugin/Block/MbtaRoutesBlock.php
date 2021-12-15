@@ -87,9 +87,20 @@ class MbtaRoutesBlock extends BlockBase implements ContainerFactoryPluginInterfa
   public function build() {
     $config = $this->configFactory->get('acquia_mbta.settings');
     $table_data = $this->mbtaRouteService->getMbtaRouteAPIResponse();
+    $rowcollection = [];
+    foreach ($table_data['data'] as $key => $value) {
+      $datacollection['long_name'] = $value['attributes']['long_name'];
+      $datacollection['description'] = $value['attributes']['description'];
+      $datacollection['color'] = $value['attributes']['color'];
+      $datacollection['text_color'] = $value['attributes']['text_color'];
+      $rowcollection[] = $datacollection;
+    }
+    // Echo "<pre>";print_r($rowcollection);die;
+    $header = ["Name", "Description", "Color"];
     return [
+      '#attached'=> ['library' => ['acquia_mbta/mbta_routes']],
       '#theme' => 'acquia_mbta_routes',
-      '#context' => 'homepage',
+      '#datatabledata' => $rowcollection,
       '#cache' => [
         'context' => 'url',
         'tags' => $config->getCacheTags(),

@@ -122,5 +122,4 @@ class MbtaRoutesApiService {
     $this->cacheBin->set('mbta_routes_data', $response_data, $expire_cache, $tags);
     return $response_data;
   }
-
 }

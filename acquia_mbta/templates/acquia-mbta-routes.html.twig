@@ -1,1 +1,24 @@
-dipali {{context}}
+{% if datatabledata %}
+  <div>
+    <table class="responsive-enabled table" data-striping="1">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead> 
+      <tbody>
+        {% for item in datatabledata %}
+          <tr bgcolor="#{{ item.color }}" scope="row">
+            <td>
+              <font color="#{{ item.text_color }}"> {{ item.long_name }} </font>
+            </td>
+            <td>
+              <font color="#{{ item.text_color }}"> {{ item.description }} </font>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody    
+    </table>
+  </div>
+{% endif %}
