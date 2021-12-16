@@ -18,7 +18,6 @@ in table format.
 SCREENSHOT
 ----------
 
-![MBTA Routes Table](https://github.com/dipali3dips/mbta_routes/blob/main/acquia_mbta/assets/images/mbta_routes.png)
 ![MBTA Routes Table](assets/images/mbta_routes.png)
 
 REQUIREMENTS
