@@ -18,7 +18,7 @@ in table format.
 SCREENSHOT
 ----------
 
-![MBTA Routes Table](/assets/images/mbta_routes.png)
+![MBTA Routes Table](/blob/main/assets/images/mbta_routes.png)
 
 REQUIREMENTS
 ------------
