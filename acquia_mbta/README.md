@@ -2,18 +2,23 @@ CONTENTS OF THIS FILE
 ---------------------
 
  * Introduction
+ * Screenshot
  * Requirements
  * Installation
  * Configuration
  * Maintainers
 
-
+```
 INTRODUCTION
 ------------
 
 This module help you to get the MBTA routes data from API and dispaly
 in table format.
+```
+SCREENSHOT
+----------
 
+![MBTA Routes Table](/assets/images/mbta_routes.png)
 
 REQUIREMENTS
 ------------
