@@ -5,6 +5,10 @@
 }
 .mbta_routes_table table tr{
   border-bottom: 0.75px solid #e1e4e7;
+  height: 50px;
+}
+.mbta_routes_table table thead tr th{
+    padding: 8px 10px;
 }
 .mbta_routes_table table tr td{
   height: 36px;

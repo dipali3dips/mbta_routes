@@ -90,34 +90,36 @@ class MbtaRoutesApiService {
   }
 
   /**
-   * Returns the Json response for the given API path.
+   * Get the data from API.
+   *
+   * @return array
+   *   Array is dervied from Json response.
    */
-  public function getMbtaRouteApiResponse() {
+  public function getMbtaRouteApiResponse(string $api_url, string $api_key = NULL) {
     $cached_response = $this->cacheBin->get('mbta_routes_data');
     $response_data = NULL;
     if ($cached_response) {
       return $cached_response->data;
     }
     $expire_cache = Cache::PERMANENT;
-    $api_url = $this->configFactory->get('acquia_mbta.settings')->get("mbta_api");
-    $api_key = $this->configFactory->get('acquia_mbta.settings')->get("mbta_key");
-    if (empty($api_url) || empty($api_key)) {
-      $this->loggerFactory->get('acquia_mbta')->notice($this->t('Empty API Url or Empty Api Key'));
-    }
-    else {
-      try {
-        $response = $this->httpClient->request('GET', $api_url . '?api_key=' . $api_key);
-        $response_data = json_decode($response->getBody()->getContents(), TRUE);
+    try {
+      if ($api_key) {
+        $response = $this->httpClient->request('GET', $api_url, ['query' => ['api_key' => $api_key]]);
       }
-      catch (\Exception $e) {
-        $this->loggerFactory->get('acquia_mbta')->emergency('Retrieving data from the following @url failed with error for @url with @error', [
-          '@url' => $api_url,
-          '@error' => $e->getMessage(),
-        ]
-        );
+      else {
+        $response = $this->httpClient->request('GET', $api_url);
       }
-      $expire_cache = $this->timeService->getRequestTime() + 60 * 1;
+      $response_data = json_decode($response->getBody()->getContents(), TRUE);
     }
+    catch (\Exception $e) {
+      $this->loggerFactory->get('acquia_mbta')->emergency('Retrieving data from the following @url failed with error for @url with @error', [
+        '@url' => $api_url,
+        '@error' => $e->getMessage(),
+      ]
+      );
+    }
+    $expire_cache = $this->timeService->getRequestTime() + 60 * 1;
+
     $tags = ['config:acquia_mbta.settings'];
     $this->cacheBin->set('mbta_routes_data', $response_data, $expire_cache, $tags);
     return $response_data;
