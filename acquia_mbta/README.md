@@ -8,13 +8,13 @@ CONTENTS OF THIS FILE
  * Configuration
  * Maintainers
 
-```
+
 INTRODUCTION
 ------------
 
 This module help you to get the MBTA routes data from API and dispaly
 in table format.
-```
+
 SCREENSHOT
 ----------
 
