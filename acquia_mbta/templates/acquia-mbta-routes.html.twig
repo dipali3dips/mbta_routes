@@ -1,10 +1,10 @@
 {% if datatabledata %}
-  <div>
+  <div class="mbta_routes_table">
     <table class="responsive-enabled table" data-striping="1">
       <thead>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Description</th>
+          <th scope="col">{{ 'Name'|t }}</th>
+          <th scope="col">{{ 'Description'|t }}</th>
         </tr>
       </thead> 
       <tbody>
@@ -21,4 +21,6 @@
       </tbody    
     </table>
   </div>
+  {% else %}
+  <div class="mbta_routes_table">{{ 'No Data Found'|t }}</div>  
 {% endif %}

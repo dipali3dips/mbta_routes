@@ -92,7 +92,7 @@ class MbtaRoutesApiService {
   /**
    * Returns the Json response for the given API path.
    */
-  public function getMbtaRouteAPIResponse() {
+  public function getMbtaRouteApiResponse() {
     $cached_response = $this->cacheBin->get('mbta_routes_data');
     $response_data = NULL;
     if ($cached_response) {
@@ -122,4 +122,5 @@ class MbtaRoutesApiService {
     $this->cacheBin->set('mbta_routes_data', $response_data, $expire_cache, $tags);
     return $response_data;
   }
+
 }
