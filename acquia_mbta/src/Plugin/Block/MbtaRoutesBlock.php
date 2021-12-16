@@ -3,7 +3,6 @@
 namespace Drupal\acquia_mbta\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\ClientInterface;
@@ -28,20 +27,11 @@ class MbtaRoutesBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin_id for the plugin instance.
    * @param string $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactory $configFactory
-   *   ConfigFactory definition.
    * @param \GuzzleHttp\ClientInterface $httpClient
    *   ClientInterface definition.
    * @param \Drupal\acquia_mbta\MbtaRoutesApiService $mbta_route_service
    *   MbtaRoutesApiService definition.
    */
-
-  /**
-   * Config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
 
   /**
    * HTTP Service.
@@ -60,9 +50,8 @@ class MbtaRoutesBlock extends BlockBase implements ContainerFactoryPluginInterfa
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, ClientInterface $httpClient, MbtaRoutesApiService $mbta_route_service) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ClientInterface $httpClient, MbtaRoutesApiService $mbta_route_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->configFactory = $configFactory;
     $this->httpClient = $httpClient;
     $this->mbtaRouteService = $mbta_route_service;
   }
@@ -75,7 +64,6 @@ class MbtaRoutesBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('http_client'),
       $container->get('acquia_mbta.mbta_routes'),
     );

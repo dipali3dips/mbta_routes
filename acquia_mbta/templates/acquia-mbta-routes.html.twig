@@ -3,13 +3,13 @@
     <table class="responsive-enabled table" data-striping="1">
       <thead>
         <tr>
-          <th scope="col">{{ 'Name'|t }}</th>
-          <th scope="col">{{ 'Description'|t }}</th>
+          <th>{{ 'Name'|t }}</th>
+          <th>{{ 'Description'|t }}</th>
         </tr>
       </thead> 
       <tbody>
         {% for item in datatabledata %}
-          <tr bgcolor="#{{ item.color }}" scope="row">
+          <tr bgcolor="#{{ item.color }}">
             <td>
               <font color="#{{ item.text_color }}"> {{ item.long_name }} </font>
             </td>

@@ -1,4 +1,15 @@
-.mbta_routes_table{
-  padding-left: 20px;
+.mbta_routes_table table {
   margin: 0 auto;
+  clear: both;
+  width: 97%;
+}
+.mbta_routes_table table tr{
+  border-bottom: 0.75px solid #e1e4e7;
+}
+.mbta_routes_table table tr td{
+  height: 36px;
+  font-size: 1.125rem;
+  letter-spacing: 0;
+  line-height: 20px;
+  padding: 8px 10px;
 }
